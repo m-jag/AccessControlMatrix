@@ -1,13 +1,17 @@
 #ifndef ACCESSCONTROLMATRIX_H
 #define ACCESSCONTROLMATRIX_H
 
-#include "ACMObjects.h"
+#include <map>
 #include <vector>
+#include <string>
+
+using namespace std;
 
 /*
-		 Obj Obj Obj Obj Obj
+		  ↙ Access Control Matrix
+		 Obj Obj Obj Sbj Sbj
 		┌───┬───┬───┬───┬───┐
-	Sbj |Own|Crt|   |Wrt| Rd|
+	Sbj |Own|Crt|   |Wrt| Rd|<-- Capabilities of the subject
 		├───┼───┼───┼───┼───┤
 	Sbj |   |Own|   |   |   |
 		├───┼───┼───┼───┼───┤
@@ -22,19 +26,22 @@
 class AccessControlMatrix
 {
 	public:
-		std::vector<Subject> subjects;
-		std::vector<Object> objects;
-		std::vector<Rights> rights;
+		AccessControlMatrix(vector<string> rights);
+		void addSubject(string name);
+		void removeSubject(string name);
 
-		void addSubject();
-		void removeSubject();
+		void addObject(string name);
+		void removeObject(string name);
 
-		void addObject();
-		void removeObject();
+		vector<string> getRights();
+		void setRights(vector<string> objects, vector<string> subjects, vector<int> rights);
 
+		void printMatrix();
 
 
 	private:
-		std::vector<std::vector<std::vector<int>>> matrix;
+		vector<string> rights;
+		vector<string> objects;
+		map<string, map<string, vector<int>>> matrix;
 };
 #endif

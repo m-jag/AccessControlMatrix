@@ -1,31 +1,12 @@
 #include "ACMObjects.h"
 
-class Subject
+class Right
 {
-	std::string getName()
+	public Right(std::string name, int id)
 	{
-		return name;
+		this.name = name;
+		this.id = id;
 	}
-	int getId()
-	{
-		return id;
-	}
-};
-
-class Object
-{
-	std::string getName()
-	{
-		return name;
-	}
-	int getId()
-	{
-		return id;
-	}	
-};
-
-class Rights
-{
 	std::string getName()
 	{
 		return name;
