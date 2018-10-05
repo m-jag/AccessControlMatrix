@@ -29,9 +29,7 @@ void AccessControlMatrix::addObject(string obj_name)
 	objects.push_back(obj_name);
 	for (auto& subj : matrix)
 	{
-		cout << subj.first << endl;
 		subj.second.emplace(make_pair(obj_name, vector<int>()));
-		cout << subj.second.size() << endl;
 	}
 }
 void AccessControlMatrix::removeObject(string obj_name)
@@ -42,13 +40,13 @@ void AccessControlMatrix::removeObject(string obj_name)
 	}
 }
 
-vector<string> AccessControlMatrix::getRights()
+vector<string> AccessControlMatrix::getAllRights()
 {
 	return rights;
 }
 void AccessControlMatrix::setRight(string subject, string object, int right)
 {
-
+	
 }
 
 
@@ -76,30 +74,28 @@ void AccessControlMatrix::printMatrix()
 		}
 	}
 
-	cout << "Widths" << endl;
-	for (auto w: column_widths)
-	{
-		cout << w << " ";
-	}
-	cout << endl;
-
 	// Print the table
-	cout << setw(column_widths[0] + 1) << underline_start << end_text;
+	cout << underline_start << setw(column_widths[0]) << "" << end_text;
 	col_pos = 1;
+	int color_num = 0;
 	for (auto obj : objects)
 	{
-		cout << setw(column_widths[col_pos] + 2) << underline_start << " | " << obj << end_text;
+		cout << underline_start << " | ";
+		cout << left << setw(column_widths[col_pos]) << obj ;
+		cout << end_text;
 		col_pos++;
+		color_num = (color_num + 1) % 5;
 	}
+	cout << setfill(' ');
 	cout << endl;
 	for (auto subj : matrix)
 	{
-		cout << setw(column_widths[0]) << subj.first;
+		cout << setw(column_widths[0]) << left << subj.first;
 		col_pos = 1;
 		for (auto obj : subj.second)
 		{
 			cout << " | ";
-			cout << setw(column_widths[col_pos] + 3);
+			cout << setw(column_widths[col_pos]) << "";
 			col_pos++;
 		}
 		cout << endl;

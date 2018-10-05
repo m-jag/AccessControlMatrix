@@ -33,7 +33,7 @@ class AccessControlMatrix
 		void addObject(string name);
 		void removeObject(string name);
 
-		vector<string> getRights();
+		vector<string> getAllRights();
 		void setRight(string object, string subject, int right);
 
 		void printMatrix();
