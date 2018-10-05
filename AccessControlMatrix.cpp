@@ -46,7 +46,18 @@ vector<string> AccessControlMatrix::getAllRights()
 }
 void AccessControlMatrix::setRight(string subject, string object, int right)
 {
-	
+	// Check if right is already given
+	bool newRight = true;
+	for (auto& r : matrix.at(subject).at(object))
+	{
+		newRight = newRight && (right == r);
+	}
+
+	if (newRight)
+	{
+		matrix.at(subject).at(object).push_back(right);
+		cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
+	}
 }
 
 
@@ -95,7 +106,17 @@ void AccessControlMatrix::printMatrix()
 		for (auto obj : subj.second)
 		{
 			cout << " | ";
-			cout << setw(column_widths[col_pos]) << "";
+			string rights_formatted = "";
+			for (auto right: obj.second)
+			{
+				if (rights_formatted != "")
+				{
+					rights_formatted += " ";
+				}
+				rights_formatted += right;
+			}
+			cout << rights_formatted;
+			cout << setw(column_widths[col_pos]) << rights_formatted;
 			col_pos++;
 		}
 		cout << endl;
@@ -112,6 +133,8 @@ int main()
 	matrix.addObject("john");
 	matrix.addObject("discord");
 	matrix.addObject("outlook");
+	matrix.setRight("admin", "discord", 0);
+	matrix.setRight("john", "outlook", 0);
 	cout << endl;
 	matrix.printMatrix();
 }
