@@ -12,11 +12,14 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 }
 void AccessControlMatrix::addSubject(string sbj_name)
 {
+	// Add the existing objects into the new subject
 	map<string, vector<int>> objs;
 	for (auto& obj : objects)
 	{
 		objs.emplace(make_pair(obj, vector<int>()));
 	}
+
+	// Add the new subject to the matrix
 	matrix.emplace(make_pair(sbj_name, objs));
 }
 void AccessControlMatrix::removeSubject(string sbj_name)
@@ -26,6 +29,7 @@ void AccessControlMatrix::removeSubject(string sbj_name)
 
 void AccessControlMatrix::addObject(string obj_name)
 {
+	// Add the new object to every subject
 	objects.push_back(obj_name);
 	for (auto& subj : matrix)
 	{
@@ -48,9 +52,9 @@ void AccessControlMatrix::setRight(string subject, string object, int right)
 {
 	// Check if right is already given
 	bool newRight = true;
-	for (auto& r : matrix.at(subject).at(object))
+	for (auto r : matrix.at(subject).at(object))
 	{
-		newRight = newRight && (right == r);
+		newRight = newRight && (right != r);
 	}
 
 	if (newRight)
@@ -78,9 +82,19 @@ void AccessControlMatrix::printMatrix()
 	{
 		column_widths[0] = max(column_widths[0], (int)subj.first.length());
 		col_pos = 1;
-		for (auto obj : subj.second)
+		for (auto obj : objects)
 		{
-			column_widths[col_pos] = max(column_widths[col_pos], (int)obj.second.size() * 3 - 2);
+			// Project widths of row values
+			int projected_width = 0;
+			int num_rights = subj.second.at(obj).size();
+			switch (num_rights)
+			{
+				case 0: 0; break;
+				case 1: projected_width = 1; break; //#
+				case 2: projected_width = 5; break; //# & #
+				default: projected_width = (int)num_rights * 3; //#, #, #, & #	
+			}
+			column_widths[col_pos] = max(column_widths[col_pos], projected_width);
 			col_pos++;
 		}
 	}
@@ -103,19 +117,30 @@ void AccessControlMatrix::printMatrix()
 	{
 		cout << setw(column_widths[0]) << left << subj.first;
 		col_pos = 1;
-		for (auto obj : subj.second)
+		for (auto obj : objects)
 		{
 			cout << " | ";
 			string rights_formatted = "";
-			for (auto right: obj.second)
-			{
+			int pos = 0;
+			vector<int> rights = subj.second.at(obj);
+			for (auto right: rights)
+			{ 
 				if (rights_formatted != "")
 				{
+					if (rights.size() != 2)
+					{
+						rights_formatted += ",";
+					}
 					rights_formatted += " ";
+
+					if (pos == rights.size() - 1)
+					{
+						rights_formatted += "& ";
+					}
 				}
-				rights_formatted += right;
+				rights_formatted += to_string(right);
+				pos++;
 			}
-			cout << rights_formatted;
 			cout << setw(column_widths[col_pos]) << rights_formatted;
 			col_pos++;
 		}
@@ -128,13 +153,37 @@ int main()
 	vector<string> rights = vector<string> ();
 	rights.push_back("own");
 	rights.push_back("create");
+	rights.push_back("read");
+	rights.push_back("write");
 	AccessControlMatrix matrix = AccessControlMatrix(rights);
+	
+	matrix.addSubject("courtney");
+	matrix.addSubject("ben");
 	matrix.addSubject("john");
+	
 	matrix.addObject("john");
 	matrix.addObject("discord");
 	matrix.addObject("outlook");
+	
 	matrix.setRight("admin", "discord", 0);
+	matrix.setRight("admin", "discord", 1);
+	matrix.setRight("admin", "discord", 2);
+	matrix.setRight("admin", "discord", 3);
+
+
+	matrix.setRight("admin", "john", 0);
+	matrix.setRight("admin", "john", 1);
+	matrix.setRight("admin", "john", 2);
+
+	matrix.setRight("admin", "admin", 0);
+	matrix.setRight("admin", "admin", 1);
+	
+	matrix.setRight("ben", "discord", 0);
+	matrix.setRight("ben", "discord", 2);
+	matrix.setRight("ben", "discord", 3);
+
 	matrix.setRight("john", "outlook", 0);
+	
 	cout << endl;
 	matrix.printMatrix();
 }
