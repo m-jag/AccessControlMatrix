@@ -7,11 +7,18 @@ using namespace std;
 
 AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 {
+	for (int r_val = 0; r_val < rights.size(); r_val++)
+	{
+		cout << r_val << " " << rights.at(r_val) << endl;
+		this->rights.emplace(make_pair(rights.at(r_val), r_val));
+	}
 	addSubject("admin");
 	addObject("admin");
 }
 void AccessControlMatrix::addSubject(string sbj_name)
 {
+	subjects.push_back(sbj_name);
+
 	// Add the existing objects into the new subject
 	map<string, vector<int>> objs;
 	for (auto& obj : objects)
@@ -24,6 +31,14 @@ void AccessControlMatrix::addSubject(string sbj_name)
 }
 void AccessControlMatrix::removeSubject(string sbj_name)
 {
+	for (auto subj = subjects.begin(); subj != subjects.end(); ++subj)
+	{
+		if ((*subj)==sbj_name)
+		{
+			cout << "Removing " << *subj << endl;
+			subjects.erase(subj);
+		}
+	}
 	matrix.erase(sbj_name);
 }
 
@@ -38,30 +53,83 @@ void AccessControlMatrix::addObject(string obj_name)
 }
 void AccessControlMatrix::removeObject(string obj_name)
 {
+	cout << "--- BEFORE ---" << endl;
+	for (auto subj: matrix)
+	{
+		cout << subj.first << endl;
+		for (auto obj: subj.second)
+		{
+			cout << "\t" << obj.first << " ";
+			for (auto item: obj.second)
+			{
+				cout << item;
+			}
+			cout << endl;
+		}
+	}
+
+	for (auto obj = objects.begin(); obj != objects.end(); ++obj)
+	{
+		if ((*obj)==obj_name)
+		{
+			cout << "Removing " << *obj << endl;
+			//objects.erase(obj);
+		}
+	}
+	
 	for (auto& subj : matrix)
 	{
 		subj.second.erase(obj_name);
+	}
+
+	cout << "--- AFTER ---" << endl;
+	for (auto subj: matrix)
+	{
+		cout << subj.first << endl;
+		for (auto obj: subj.second)
+		{
+			cout << "\t" << obj.first << " ";
+			for (auto item: obj.second)
+			{
+				cout << item;
+			}
+			cout << endl;
+		}
 	}
 }
 
 vector<string> AccessControlMatrix::getAllRights()
 {
-	return rights;
+	vector<string> list_rights;
+	for (auto right: rights)
+	{
+		list_rights.push_back(right.first);
+	}
+	return list_rights;
 }
-void AccessControlMatrix::setRight(string subject, string object, int right)
+void AccessControlMatrix::setRight(string subject, string object, string right)
 {
-	// Check if right is already given
-	bool newRight = true;
-	for (auto r : matrix.at(subject).at(object))
+	try
 	{
-		newRight = newRight && (right != r);
-	}
+		int right_val = rights.at(right);
 
-	if (newRight)
-	{
-		matrix.at(subject).at(object).push_back(right);
-		cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
+		// Check if right is already given
+		bool newRight = true;
+		for (auto r : matrix.at(subject).at(object))
+		{
+			newRight = newRight && (right_val != r);
+		}
+
+		if (newRight)
+		{
+			matrix.at(subject).at(object).push_back(right_val);
+			cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
+		}
 	}
+	catch (const out_of_range& oor)
+	{
+		cout << "No such right \"" + right + "\"" << endl;
+	}	
 }
 
 
@@ -165,25 +233,28 @@ int main()
 	matrix.addObject("discord");
 	matrix.addObject("outlook");
 	
-	matrix.setRight("admin", "discord", 0);
-	matrix.setRight("admin", "discord", 1);
-	matrix.setRight("admin", "discord", 2);
-	matrix.setRight("admin", "discord", 3);
+	matrix.setRight("admin", "discord", "own");
+	matrix.setRight("admin", "discord", "create");
+	matrix.setRight("admin", "discord", "read");
+	matrix.setRight("admin", "discord", "write");
 
 
-	matrix.setRight("admin", "john", 0);
-	matrix.setRight("admin", "john", 1);
-	matrix.setRight("admin", "john", 2);
+	matrix.setRight("admin", "john", "own");
+	matrix.setRight("admin", "john", "create");
+	matrix.setRight("admin", "john", "read");
 
-	matrix.setRight("admin", "admin", 0);
-	matrix.setRight("admin", "admin", 1);
+	matrix.setRight("admin", "admin", "own");
+	matrix.setRight("admin", "admin", "create");
 	
-	matrix.setRight("ben", "discord", 0);
-	matrix.setRight("ben", "discord", 2);
-	matrix.setRight("ben", "discord", 3);
+	matrix.setRight("ben", "discord", "own");
+	matrix.setRight("ben", "discord", "read");
+	matrix.setRight("ben", "discord", "write");
 
-	matrix.setRight("john", "outlook", 0);
+	matrix.setRight("john", "outlook", "own");
+
+	matrix.removeSubject("courtney");
+	matrix.removeObject("outlook");
 	
 	cout << endl;
-	matrix.printMatrix();
+	//matrix.printMatrix();
 }
