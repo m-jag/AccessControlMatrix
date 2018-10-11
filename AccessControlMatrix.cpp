@@ -14,6 +14,14 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 	}
 	addSubject("admin");
 	addObject("admin");
+	for (auto o: objects)
+	{
+		for (auto r: rights)
+		{
+			setRight("admin", o, r);
+		}
+	}
+	setSubject("admin");
 }
 void AccessControlMatrix::addSubject(string sbj_name)
 {
@@ -41,6 +49,11 @@ void AccessControlMatrix::removeSubject(string sbj_name)
 	}
 	matrix.erase(sbj_name);
 }
+void AccessControlMatrix::setSubject(string sbj_name)
+{
+	accessingSubject = sbj_name;
+	cout << "Current User : " << accessingSubject;
+}
 
 void AccessControlMatrix::addObject(string obj_name)
 {
@@ -53,49 +66,13 @@ void AccessControlMatrix::addObject(string obj_name)
 }
 void AccessControlMatrix::removeObject(string obj_name)
 {
-	cout << "--- BEFORE ---" << endl;
-	for (auto subj: matrix)
-	{
-		cout << subj.first << endl;
-		for (auto obj: subj.second)
-		{
-			cout << "\t" << obj.first << " ";
-			for (auto item: obj.second)
-			{
-				cout << item;
-			}
-			cout << endl;
-		}
-	}
-
-	for (auto obj = objects.begin(); obj != objects.end(); ++obj)
-	{
-		if ((*obj)==obj_name)
-		{
-			cout << "Removing " << *obj << endl;
-			//objects.erase(obj);
-		}
-	}
+	objects.erase(remove(objects.begin(), objects.end(), obj_name), objects.end());
 	
 	for (auto& subj : matrix)
 	{
 		subj.second.erase(obj_name);
 	}
 
-	cout << "--- AFTER ---" << endl;
-	for (auto subj: matrix)
-	{
-		cout << subj.first << endl;
-		for (auto obj: subj.second)
-		{
-			cout << "\t" << obj.first << " ";
-			for (auto item: obj.second)
-			{
-				cout << item;
-			}
-			cout << endl;
-		}
-	}
 }
 
 vector<string> AccessControlMatrix::getAllRights()
@@ -123,7 +100,7 @@ void AccessControlMatrix::setRight(string subject, string object, string right)
 		if (newRight)
 		{
 			matrix.at(subject).at(object).push_back(right_val);
-			cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
+			//cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
 		}
 	}
 	catch (const out_of_range& oor)
@@ -224,37 +201,5 @@ int main()
 	rights.push_back("read");
 	rights.push_back("write");
 	AccessControlMatrix matrix = AccessControlMatrix(rights);
-	
-	matrix.addSubject("courtney");
-	matrix.addSubject("ben");
-	matrix.addSubject("john");
-	
-	matrix.addObject("john");
-	matrix.addObject("discord");
-	matrix.addObject("outlook");
-	
-	matrix.setRight("admin", "discord", "own");
-	matrix.setRight("admin", "discord", "create");
-	matrix.setRight("admin", "discord", "read");
-	matrix.setRight("admin", "discord", "write");
-
-
-	matrix.setRight("admin", "john", "own");
-	matrix.setRight("admin", "john", "create");
-	matrix.setRight("admin", "john", "read");
-
-	matrix.setRight("admin", "admin", "own");
-	matrix.setRight("admin", "admin", "create");
-	
-	matrix.setRight("ben", "discord", "own");
-	matrix.setRight("ben", "discord", "read");
-	matrix.setRight("ben", "discord", "write");
-
-	matrix.setRight("john", "outlook", "own");
-
-	matrix.removeSubject("courtney");
-	matrix.removeObject("outlook");
-	
-	cout << endl;
-	//matrix.printMatrix();
+	matrix.printMatrix();
 }

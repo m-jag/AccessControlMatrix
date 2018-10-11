@@ -27,6 +27,9 @@ class AccessControlMatrix
 {
 	public:
 		AccessControlMatrix(vector<string> rights);
+		void printMatrix();
+
+	protected:
 		void addSubject(string name);
 		void removeSubject(string name);
 
@@ -37,9 +40,6 @@ class AccessControlMatrix
 		void setRight(string object, string subject, string right);
 
 		void setSubject(string subject);
-
-		void printMatrix();
-
 
 	private:
 		string accessingSubject;
