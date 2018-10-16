@@ -36,13 +36,14 @@ class AccessControlMatrix
 		void printMatrix();
 
 	protected:
-		void addSubject(string name); //R7
-		void removeSubject(string name); //R8
+		void grantRight(string object, string subject, string right); //R2
 
 		void addObject(string name); //R5
 		void removeObject(string name); //R6
 
-		void grantRight(string object, string subject, string right); //R2
+		void addSubject(string name); //R7
+		void removeSubject(string name); //R8
+
 		
 		
 
@@ -57,4 +58,4 @@ class AccessControlMatrix
 		vector<string> objects;
 		map<string, map<string, vector<int>>> matrix;
 };
-#endif
+#endif //ACCESSCONTROLMATRIX_H

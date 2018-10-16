@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// Constructor
 AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 {
 	for (int r_val = 0; r_val < rights.size(); r_val++)
@@ -13,7 +14,7 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 		this->rights.emplace(make_pair(rights.at(r_val), r_val));
 	}
 	addSubject("admin");
-	addObject("admin");
+	addSubject("admin");
 	for (auto o: objects)
 	{
 		for (auto r: rights)
@@ -23,6 +24,7 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 	}
 	setSubject("admin");
 }
+
 void AccessControlMatrix::addSubject(string sbj_name)
 {
 	subjects.push_back(sbj_name);
@@ -36,6 +38,7 @@ void AccessControlMatrix::addSubject(string sbj_name)
 
 	// Add the new subject to the matrix
 	matrix.emplace(make_pair(sbj_name, objs));
+	addObject(sbj_name);
 }
 void AccessControlMatrix::removeSubject(string sbj_name)
 {
@@ -154,7 +157,7 @@ vector<string> AccessControlMatrix::getRights(string object, string subject)
 	}
 	return list_rights;
 }
-void transferRights(string subject1, string subject2, string object)
+void transferRights(string subject1, string subject2)
 {
 
 }
@@ -241,22 +244,4 @@ void AccessControlMatrix::printMatrix()
 		}
 		cout << endl;
 	}
-}
-
-int main()
-{
-	vector<string> rights = vector<string> ();
-	rights.push_back("own");
-	rights.push_back("create");
-	rights.push_back("read");
-	rights.push_back("write");
-	AccessControlMatrix matrix = AccessControlMatrix(rights);
-	matrix.printMatrix();
-	matrix.deleteRight("admin", "admin", "own");
-	matrix.printMatrix();
-	for (auto val: matrix.getRights("admin", "admin"))
-	{
-		cout << val << " ";
-	}
-	cout << endl;
 }
