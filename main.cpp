@@ -13,11 +13,4 @@ int main()
 	rights.push_back("write");
 	AccessControlMatrix matrix = AccessControlMatrix(rights);
 	matrix.printMatrix();
-	matrix.deleteRight("admin", "admin", "own");
-	matrix.printMatrix();
-	for (auto val: matrix.getRights("admin", "admin"))
-	{
-		cout << val << " ";
-	}
-	cout << endl;
 }
