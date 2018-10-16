@@ -18,7 +18,7 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 	{
 		for (auto r: rights)
 		{
-			setRight("admin", o, r);
+			grantRight("admin", o, r);
 		}
 	}
 	setSubject("admin");
@@ -52,7 +52,7 @@ void AccessControlMatrix::removeSubject(string sbj_name)
 void AccessControlMatrix::setSubject(string sbj_name)
 {
 	accessingSubject = sbj_name;
-	cout << "Current User : " << accessingSubject;
+	cout << "Current User : " << accessingSubject << endl;
 }
 
 void AccessControlMatrix::addObject(string obj_name)
@@ -84,7 +84,7 @@ vector<string> AccessControlMatrix::getAllRights()
 	}
 	return list_rights;
 }
-void AccessControlMatrix::setRight(string subject, string object, string right)
+void AccessControlMatrix::grantRight(string subject, string object, string right)
 {
 	try
 	{
@@ -107,6 +107,56 @@ void AccessControlMatrix::setRight(string subject, string object, string right)
 	{
 		cout << "No such right \"" + right + "\"" << endl;
 	}	
+}
+int AccessControlMatrix::deleteRight(string object, string subject, string right)
+{
+	try
+	{
+		int right_val = rights.at(right);
+
+		// find right position
+		bool found = false;
+		int rightPos = -1;
+		for (auto r : matrix.at(subject).at(object))
+		{
+			rightPos++;
+			if (right_val == r)
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if (rightPos >= 0 && found)
+		{
+			matrix.at(subject).at(object).erase(matrix.at(subject).at(object).begin()+rightPos);
+			//cout << "Right Removed! (" << subject << ", " << object << ", " << right << ")" << endl;
+		}
+	}
+	catch (const out_of_range& oor)
+	{
+		cout << "No such right \"" + right + "\"" << endl;
+	}
+}
+vector<string> AccessControlMatrix::getRights(string object, string subject)
+{
+	vector<string> list_rights;
+	for (auto right_num: matrix.at(subject).at(object))
+	{
+		for (auto right_val: rights)
+		{
+			if (right_val.second == right_num)
+			{
+				list_rights.push_back(right_val.first);
+				break;
+			}
+		}
+	}
+	return list_rights;
+}
+void transferRights(string subject1, string subject2, string object)
+{
+
 }
 
 
@@ -202,4 +252,11 @@ int main()
 	rights.push_back("write");
 	AccessControlMatrix matrix = AccessControlMatrix(rights);
 	matrix.printMatrix();
+	matrix.deleteRight("admin", "admin", "own");
+	matrix.printMatrix();
+	for (auto val: matrix.getRights("admin", "admin"))
+	{
+		cout << val << " ";
+	}
+	cout << endl;
 }
