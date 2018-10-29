@@ -53,12 +53,15 @@ class AccessControlMatrix
 		vector<string> getRights(string object, string subject); //R4
 
 		void addObject(string name, bool isSubject=false); //R5
-		void removeObject(string name); //R6
+		void removeObject(string name, bool isSubject=false); //R6
 
 		void addSubject(string name); //R7
 		void removeSubject(string name); //R8
 
 		void setSubject(string subject);
+		bool subjectExists(string subj_name);
+		bool objectExists(string obj_name);
+		bool rightExists(string right_name);
 
 	private:
 		string accessingSubject;

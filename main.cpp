@@ -11,6 +11,7 @@ int main()
 	rights.push_back("create");
 	rights.push_back("read");
 	rights.push_back("write");
+
 	AccessControlMatrix matrix = AccessControlMatrix(rights);
 	matrix.printMatrix();
 }

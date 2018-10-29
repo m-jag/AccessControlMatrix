@@ -14,6 +14,13 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 		this->rights.emplace(make_pair(rights.at(r_val), r_val));
 	}
 	addSubject("admin");
+	for (auto s: subjects)
+	{
+		for (auto r: rights)
+		{
+			grantRight("admin", s, r);
+		}
+	}
 	for (auto o: objects)
 	{
 		for (auto r: rights)
@@ -22,18 +29,72 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 		}
 	}
 	setSubject("admin");
-	deleteRight("admin", "admin", "own");
-	addSubject("aaron");
+	addSubject("john");
+	addSubject("adam");
 	addObject("a");
 	addObject("c");
 	addObject("b");
-	addSubject("admin");
+	grantRight("john", "john", "own");
+	grantRight("john", "john", "create");
+	grantRight("adam", "adam", "own");
+	grantRight("adam", "adam", "read");
+	grantRight("adam", "adam", "write");
+	grantRight("john", "adam", "read");
+	grantRight("john", "adam", "write");
+	deleteRight("john", "adam", "write");
+	removeSubject("john");
+	removeObject("a");
 }
 
 // R1
-void transferRights(string subject1, string subject2)
+void /**AccessControlMatrix::**/transferRights(string subject1, string subject2)
 {
 
+}
+
+bool AccessControlMatrix::subjectExists(string subj_name)
+{
+	// Check if object exists
+	bool exists = false;
+	for (auto sbj: subjects)
+	{
+		if (sbj == subj_name)
+		{
+			exists = true;
+			break;
+		}
+	}
+	return exists;
+}
+
+bool AccessControlMatrix::objectExists(string obj_name)
+{
+	// Check if object exists
+	bool exists = false;
+	for (auto obj: objects)
+	{
+		if (obj == obj_name)
+		{
+			exists = true;
+			break;
+		}
+	}
+	return exists;
+}
+
+bool AccessControlMatrix::rightExists(string right_name)
+{
+	// Check if object exists
+	bool exists = false;
+	for (auto r: rights)
+	{
+		if (r == right_name)
+		{
+			exists = true;
+			break;
+		}
+	}
+	return exists;
 }
 
 // R2
@@ -63,7 +124,7 @@ void AccessControlMatrix::grantRight(string subject, string object, string right
 }
 
 // R3
-int AccessControlMatrix::deleteRight(string object, string subject, string right)
+int AccessControlMatrix::deleteRight(string subject, string object, string right)
 {
 	try
 	{
@@ -133,16 +194,38 @@ void AccessControlMatrix::addObject(string obj_name, bool isSubject)
 }
 
 // R6
-void AccessControlMatrix::removeObject(string obj_name)
+void AccessControlMatrix::removeObject(string obj_name, bool isSubject)
 {
-	// Remove object from list of objects
-	objects.erase(remove(objects.begin(), objects.end(), obj_name), objects.end());
-	
-	// Remove object from the ACM
-	for (auto& subj : matrix)
+	// Check if object exists
+	bool exists = objectExists(obj_name);
+
+	if (!exists)
 	{
-		subj.second.erase(obj_name);
+		cout << "No such object \"" + obj_name + "\"" << endl;
+		return;
 	}
+
+	try
+	{
+		// Remove object from list of objects
+		if (!isSubject)
+		{
+			cout << "Removing " << obj_name << endl;
+			objects.erase(remove(objects.begin(), objects.end(), obj_name), objects.end());
+		}
+		
+		// Remove object from the ACM
+		for (auto& subj : matrix)
+		{
+			subj.second.erase(obj_name);
+		}
+	}
+	catch (const out_of_range& oor)
+	{
+		cout << "No such object \"" + obj_name + "\"" << endl;
+	}
+	
+	
 
 }
 
@@ -153,6 +236,10 @@ void AccessControlMatrix::addSubject(string sbj_name)
 
 	// Add the existing objects into the new subject
 	map<string, vector<int>> objs;
+	for (auto& sbj : subjects)
+	{
+		objs.emplace(make_pair(sbj, vector<int>()));
+	}
 	for (auto& obj : objects)
 	{
 		objs.emplace(make_pair(obj, vector<int>()));
@@ -166,16 +253,32 @@ void AccessControlMatrix::addSubject(string sbj_name)
 // R8
 void AccessControlMatrix::removeSubject(string sbj_name)
 {
-	for (auto subj = subjects.begin(); subj != subjects.end(); ++subj)
+	// Check if object exists
+	bool exists = subjectExists(sbj_name);
+
+	if (!exists)
 	{
-		if ((*subj)==sbj_name)
-		{
-			cout << "Removing " << *subj << endl;
-			subjects.erase(subj);
-		}
+		cout << "No such subject \"" + sbj_name + "\"" << endl;
+		return;
 	}
-	matrix.erase(sbj_name);
-	removeObject(sbj_name);
+
+	try
+	{
+		for (auto subj = subjects.begin(); subj != subjects.end(); ++subj)
+		{
+			if ((*subj)==sbj_name)
+			{
+				cout << "Removing " << *subj << endl;
+				subjects.erase(subj);
+			}
+		}
+		matrix.erase(sbj_name);
+		removeObject(sbj_name, true);
+	}
+	catch (const out_of_range& oor)
+	{
+		cout << "No such subject \"" + sbj_name + "\"" << endl;
+	}
 }
 
 void AccessControlMatrix::setSubject(string sbj_name)
@@ -191,21 +294,40 @@ void AccessControlMatrix::printMatrix()
 
 	// Calculate the column widths
 	int column_widths[matrix.size() + objects.size() + 1];
-	int col_pos = 1;
-	for (auto subj: matrix)
+	int col_pos = 1; // skip first row since it will be the row names
+	// Check column names for width
+	for (auto subj: subjects) // Subjects will be listed first
 	{
-		column_widths[col_pos] = subj.first.length();
+		column_widths[col_pos] = subj.length();
 		col_pos++;
 	}
-	for (auto obj: objects)
+	for (auto obj: objects) // Objects will be listed second
 	{
 		column_widths[col_pos] = obj.length();
 		col_pos++;
 	}
+	// Check rights widths
 	for (auto subj : matrix)
 	{
-		column_widths[0] = max(column_widths[0], (int)subj.first.length());
+		column_widths[0] = max(column_widths[0], (int)subj.first.length()); // Check row name
 		col_pos = 1;
+		// iterate through subjects first
+		for (auto obj : subjects)
+		{
+			// Project widths of row values
+			int projected_width = 0;
+			int num_rights = subj.second.at(obj).size();
+			switch (num_rights)
+			{
+				case 0: 0; break;
+				case 1: projected_width = 1; break; //#
+				case 2: projected_width = 5; break; //# & #
+				default: projected_width = (int)num_rights * 3; //#, #, #, & #	
+			}
+			column_widths[col_pos] = max(column_widths[col_pos], projected_width);
+			col_pos++;
+		}
+		// now iterate through objects
 		for (auto obj : objects)
 		{
 			// Project widths of row values
@@ -226,10 +348,10 @@ void AccessControlMatrix::printMatrix()
 	// Print the table
 	cout << underline_start << setw(column_widths[0]) << "" << end_text;
 	col_pos = 1;
-	for (auto subj: matrix)
+	for (auto subj: subjects)
 	{
 		cout << underline_start << " | ";
-		cout << left << setw(column_widths[col_pos]) << subj.first;
+		cout << left << setw(column_widths[col_pos]) << subj;
 		cout << end_text;
 		col_pos++;
 	}
@@ -246,12 +368,12 @@ void AccessControlMatrix::printMatrix()
 	{
 		cout << setw(column_widths[0]) << left << subj.first;
 		col_pos = 1;
-		for (auto subj_obj: matrix)
+		for (auto subj_obj: subjects)
 		{
 			cout << " | ";
 			string rights_formatted = "";
 			int pos = 0;
-			vector<int> rights = subj.second.at(subj_obj.first);
+			vector<int> rights = subj.second.at(subj_obj);
 			for (auto right: rights)
 			{ 
 				// if not first number added
