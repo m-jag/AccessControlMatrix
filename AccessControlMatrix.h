@@ -47,7 +47,14 @@ class AccessControlMatrix
 		// right create = {0, "create"};
 
 	protected:
-		void transferRights(string subject1, string subject2, string object); //R1
+		void setSubject(string subject);
+		bool checkRight(string object, string right); // Checks rights for the accessing subject
+		
+		bool subjectExists(string subj_name);
+		bool objectExists(string obj_name);
+		bool rightExists(string right_name);
+
+		void transferRights(string subject1, string subject2); //R1
 		void grantRight(string object, string subject, string right); //R2
 		int deleteRight(string object, string subject, string right); //R3
 		vector<string> getRights(string object, string subject); //R4
@@ -57,11 +64,6 @@ class AccessControlMatrix
 
 		void addSubject(string name); //R7
 		void removeSubject(string name); //R8
-
-		void setSubject(string subject);
-		bool subjectExists(string subj_name);
-		bool objectExists(string obj_name);
-		bool rightExists(string right_name);
 
 	private:
 		string accessingSubject;
