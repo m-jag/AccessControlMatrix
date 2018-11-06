@@ -102,6 +102,10 @@ bool AccessControlMatrix::rightExists(string right_name)
 // Transfers rights from S1 -> S2
 void AccessControlMatrix::transferRights(string subject1, string subject2)
 {
+	// Check rights
+
+
+	// Executing commands
 	bool subj1Exists = subjectExists(subject1);
 	bool subj2Exists = subjectExists(subject2);
 	if (subj1Exists && subj2Exists)
