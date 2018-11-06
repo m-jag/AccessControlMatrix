@@ -18,38 +18,51 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 		cout << r_val << " " << rights.at(r_val) << endl;
 		this->rights.emplace(make_pair(rights.at(r_val), r_val));
 	}
-	addSubject("admin");
-	for (auto s: subjects)
+	addSubject("admin", "admin", "password");
+
+	// Give ownership of admin to admin
+	int right_val = this->rights.at("own");
+
+	// Check if right is already given
+	bool newRight = true;
+	for (auto r : matrix.at("admin").at("admin"))
 	{
-		for (auto r: rights)
-		{
-			grantRight("admin", s, r);
-		}
+		newRight = newRight && (right_val != r);
 	}
-	for (auto o: objects)
+
+	if (newRight)
 	{
-		for (auto r: rights)
-		{
-			grantRight("admin", o, r);
-		}
+		matrix.at("admin").at("admin").push_back(right_val);
+		//cout << "Right Set! (" << subject << ", " << object << ", " << right << ")" << endl;
 	}
-	setSubject("admin");
+
+	addSubject("admin", "bob", "pass");
+	addSubject("admin", "john", "secret");
+	addSubject("john", "zoe", "god");
+	addObject("john", "discord");
+	removeSubject("admin", "john");
+	removeObject("admin", "discord");
 }
 
-void AccessControlMatrix::setSubject(string sbj_name)
+bool AccessControlMatrix::checkRight(string subject, string object, string right)
 {
-	accessingSubject = sbj_name;
-	cout << "Current User : " << accessingSubject << endl;
-}
+	// Check values exist
+	bool sExists = subjectExists(subject);
+	bool oExists = objectExists(object) || subjectExists(object);
+	bool rExists = rightExists(right);
+	if (!sExists || !oExists || !rExists)
+	{
+		return false;
+	}
 
-bool AccessControlMatrix::checkRight(string object, string right)
-{
+	// Check if the subject has the given right for the given object
 	bool hasRight = false;
 	int r_val = rights.at(right);
-	for (auto r: matrix.at(accessingSubject).at(object))
+	for (auto r: matrix.at(subject).at(object))
 	{
 		hasRight = hasRight || r == r_val;
 	}
+
 	return hasRight;
 }
 
@@ -59,7 +72,7 @@ bool AccessControlMatrix::subjectExists(string subj_name)
 	bool exists = false;
 	for (auto sbj: subjects)
 	{
-		if (sbj == subj_name)
+		if (sbj.first == subj_name)
 		{
 			exists = true;
 			break;
@@ -103,27 +116,42 @@ bool AccessControlMatrix::rightExists(string right_name)
 void AccessControlMatrix::transferRights(string subject1, string subject2)
 {
 	// Check rights
-
+	bool s1OwnsS2 = checkRight(subject1, subject2, "own");
 
 	// Executing commands
 	bool subj1Exists = subjectExists(subject1);
 	bool subj2Exists = subjectExists(subject2);
-	if (subj1Exists && subj2Exists)
+	if (subj1Exists && subj2Exists && s1OwnsS2)
 	{
 		map<string, vector<int>> s1Rights = matrix.at(subject1);
 		matrix.at(subject2).swap(s1Rights);
 	}
-	else
+	else if (!(subj1Exists && subj2Exists))
 	{
 		cout << "Failed " << subject1 << (subj1Exists? " Exists ": " Doesn't Exist ") << subject2 << (subj1Exists? " Exists ": " Doesn't Exist ") << endl;
+	}
+	else if (!s1OwnsS2)
+	{
+		cout << "Failed " << subject1 << " doesn't own " << subject2 << endl;
+	}
+	else
+	{
+		cout << "Unknown Failure" << endl;
 	}
 }
 
 // R2
-void AccessControlMatrix::grantRight(string subject, string object, string right)
+void AccessControlMatrix::grantRight(string granting_subject, string subject, string object, string right)
 {
 	try
 	{
+		// Check rights
+		bool subjOwnsSbj = checkRight(granting_subject, subject, "own");
+		if (!subjOwnsSbj)
+		{
+			return;
+		}
+
 		int right_val = rights.at(right);
 
 		// Check if right is already given
@@ -146,10 +174,17 @@ void AccessControlMatrix::grantRight(string subject, string object, string right
 }
 
 // R3
-int AccessControlMatrix::deleteRight(string subject, string object, string right)
+void AccessControlMatrix::deleteRight(string subject, string object, string right)
 {
 	try
 	{
+		// Check rights
+		bool subjOwnsObj = checkRight(subject, object, "own");
+		if (!subjOwnsObj)
+		{
+			return;
+		}
+
 		int right_val = rights.at(right);
 
 		// find right position
@@ -178,9 +213,17 @@ int AccessControlMatrix::deleteRight(string subject, string object, string right
 }
 
 // R4
-vector<string> AccessControlMatrix::getRights(string object, string subject)
+vector<string> AccessControlMatrix::getRights(string subject, string object)
 {
 	vector<string> list_rights;
+
+	// Check rights
+	bool subjOwnsObj = checkRight(subject, object, "own");
+	if (!subjOwnsObj)
+	{
+		return list_rights;
+	}
+
 	for (auto right_num: matrix.at(subject).at(object))
 	{
 		for (auto right_val: rights)
@@ -196,7 +239,7 @@ vector<string> AccessControlMatrix::getRights(string object, string subject)
 }
 
 // R5
-void AccessControlMatrix::addObject(string obj_name, bool isSubject)
+void AccessControlMatrix::addObject(string creating_subject, string obj_name, bool isSubject)
 {
 	// Check if object already added
 	bool exists = false;
@@ -213,17 +256,45 @@ void AccessControlMatrix::addObject(string obj_name, bool isSubject)
 	{
 		subj.second.emplace(make_pair(obj_name, vector<int>()));
 	}
+
+	// Grant ownership to all subjects that own the given subject and subjects that own that subject
+	vector<string> owners;
+	owners.push_back(creating_subject);
+	for (auto owner: owners)
+	{
+		for (auto subject: subjects)
+		{
+			if (checkRight(subject.first, owner, "own"))
+			{
+				if (!(find(owners.begin(), owners.end(), subject.first) != owners.end()))
+				{
+					owners.push_back(subject.first);
+				}
+			}
+		}
+	}
+	for (auto owner: owners)
+	{
+		grantRight(owner, owner, obj_name, "own");
+	}
 }
 
 // R6
-void AccessControlMatrix::removeObject(string obj_name, bool isSubject)
+void AccessControlMatrix::removeObject(string owning_subject, string obj_name, bool isSubject)
 {
 	// Check if object exists
 	bool exists = isSubject? subjectExists(obj_name): objectExists(obj_name);
 
 	if (!exists)
 	{
-		cout << "-No such object \"" + obj_name + "\"" << endl;
+		cout << "No such object \"" + obj_name + "\"" << endl;
+		return;
+	}
+
+	// Check rights
+	bool subjOwnsObj = checkRight(owning_subject, obj_name, "own");
+	if (!subjOwnsObj)
+	{
 		return;
 	}
 
@@ -246,21 +317,19 @@ void AccessControlMatrix::removeObject(string obj_name, bool isSubject)
 	{
 		cout << "No such object \"" + obj_name + "\"" << endl;
 	}
-	
-	
-
 }
 
 // R7
-void AccessControlMatrix::addSubject(string sbj_name)
+void AccessControlMatrix::addSubject(string creating_subject, string sbj_name, string password)
 {
-	subjects.push_back(sbj_name);
+	//passwordHash = 
+	subjects.emplace(make_pair(sbj_name, password));
 
 	// Add the existing objects into the new subject
 	map<string, vector<int>> objs;
 	for (auto& sbj : subjects)
 	{
-		objs.emplace(make_pair(sbj, vector<int>()));
+		objs.emplace(make_pair(sbj.first, vector<int>()));
 	}
 	for (auto& obj : objects)
 	{
@@ -269,13 +338,35 @@ void AccessControlMatrix::addSubject(string sbj_name)
 
 	// Add the new subject to the matrix
 	matrix.emplace(make_pair(sbj_name, objs));
-	addObject(sbj_name, true);
+	addObject(creating_subject, sbj_name, true);
+	// Grant ownership to all subjects that own the given subject and subjects that own that subject
+	vector<string> owners;
+	owners.push_back(creating_subject);
+	for (auto owner: owners)
+	{
+		for (auto subject: subjects)
+		{
+			if (checkRight(subject.first, owner, "own"))
+			{
+				if (!(find(owners.begin(), owners.end(), subject.first) != owners.end()))
+				{
+					owners.push_back(subject.first);
+				}
+			}
+		}
+	}
+	for (auto owner: owners)
+	{
+		grantRight(owner, owner, sbj_name, "own");
+	}
+	// Grant ownsership to the subject over itself
+	grantRight(creating_subject, sbj_name, sbj_name, "own");
 }
 
 // R8
-void AccessControlMatrix::removeSubject(string sbj_name)
+void AccessControlMatrix::removeSubject(string owning_subject, string sbj_name)
 {
-	// Check if object exists
+	// Check if subject exists
 	bool exists = subjectExists(sbj_name);
 
 	if (!exists)
@@ -284,15 +375,27 @@ void AccessControlMatrix::removeSubject(string sbj_name)
 		return;
 	}
 
+	// Check rights
+	bool subjOwnsSbj = checkRight(owning_subject, sbj_name, "own");
+	if (!subjOwnsSbj)
+	{
+		cout << "Ownership failure on removing " << sbj_name << " by " << owning_subject <<  endl;
+		return;
+	}
+
 	try
 	{
-		removeObject(sbj_name, true);
+		removeObject(owning_subject, sbj_name, true);
 		for (auto subj = subjects.begin(); subj != subjects.end(); ++subj)
 		{
-			if ((*subj)==sbj_name)
+			if (subj->first==sbj_name)
 			{
 				//cout << "Removing " << *subj << endl;
 				subjects.erase(subj);
+			}
+			if (subj == subjects.end())
+			{
+				break;
 			}
 		}
 		matrix.erase(sbj_name);
@@ -301,6 +404,11 @@ void AccessControlMatrix::removeSubject(string sbj_name)
 	{
 		cout << "No such subject \"" + sbj_name + "\"" << endl;
 	}
+}
+
+bool AccessControlMatrix::authenticate(string name, string password)
+{
+	return subjects.at(name) == password;
 }
 
 void AccessControlMatrix::printMatrix()
@@ -314,7 +422,7 @@ void AccessControlMatrix::printMatrix()
 	// Check column names for width
 	for (auto subj: subjects) // Subjects will be listed first
 	{
-		column_widths[col_pos] = subj.length();
+		column_widths[col_pos] = subj.first.length();
 		col_pos++;
 	}
 	for (auto obj: objects) // Objects will be listed second
@@ -332,7 +440,7 @@ void AccessControlMatrix::printMatrix()
 		{
 			// Project widths of row values
 			int projected_width = 0;
-			int num_rights = subj.second.at(obj).size();
+			int num_rights = subj.second.at(obj.first).size();
 			switch (num_rights)
 			{
 				case 0: 0; break;
@@ -367,7 +475,7 @@ void AccessControlMatrix::printMatrix()
 	for (auto subj: subjects)
 	{
 		cout << underline_start << " | ";
-		cout << left << setw(column_widths[col_pos]) << subj;
+		cout << left << setw(column_widths[col_pos]) << subj.first;
 		cout << end_text;
 		col_pos++;
 	}
@@ -389,7 +497,7 @@ void AccessControlMatrix::printMatrix()
 			cout << " | ";
 			string rights_formatted = "";
 			int pos = 0;
-			vector<int> rights = subj.second.at(subj_obj);
+			vector<int> rights = subj.second.at(subj_obj.first);
 			for (auto right: rights)
 			{ 
 				// if not first number added

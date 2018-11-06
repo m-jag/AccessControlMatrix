@@ -1,0 +1,481 @@
+g++ -c AccessControlMatrix.cpp
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h: In instantiation of ‘bool __gnu_cxx::__ops::_Iter_equals_val<_Value>::operator()(_Iterator) [with _Iterator = __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char>*, std::vector<std::__cxx11::basic_string<char> > >; _Value = const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >]’:
+/usr/include/c++/7/bits/stl_algo.h:120:14:   required from ‘_RandomAccessIterator std::__find_if(_RandomAccessIterator, _RandomAccessIterator, _Predicate, std::random_access_iterator_tag) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char>*, std::vector<std::__cxx11::basic_string<char> > >; _Predicate = __gnu_cxx::__ops::_Iter_equals_val<const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> > >]’
+/usr/include/c++/7/bits/stl_algo.h:161:23:   required from ‘_Iterator std::__find_if(_Iterator, _Iterator, _Predicate) [with _Iterator = __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char>*, std::vector<std::__cxx11::basic_string<char> > >; _Predicate = __gnu_cxx::__ops::_Iter_equals_val<const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> > >]’
+/usr/include/c++/7/bits/stl_algo.h:3907:28:   required from ‘_IIter std::find(_IIter, _IIter, const _Tp&) [with _IIter = __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char>*, std::vector<std::__cxx11::basic_string<char> > >; _Tp = std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >]’
+AccessControlMatrix.cpp:267:53:   required from here
+/usr/include/c++/7/bits/predefined_ops.h:241:17: error: no match for ‘operator==’ (operand types are ‘std::__cxx11::basic_string<char>’ and ‘const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’)
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:859:5: note: candidate: template<class _IteratorL, class _IteratorR, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_IteratorL, _Container>&, const __gnu_cxx::__normal_iterator<_IteratorR, _Container>&)
+     operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:859:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_IteratorL, _Container>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:866:5: note: candidate: template<class _Iterator, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&)
+     operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:866:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_Iterator, _Container>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/7/bits/c++allocator.h:33:0,
+                 from /usr/include/c++/7/bits/allocator.h:46,
+                 from /usr/include/c++/7/bits/stl_tree.h:64,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/ext/new_allocator.h:155:5: note: candidate: template<class _Tp> bool __gnu_cxx::operator==(const __gnu_cxx::new_allocator<_Tp>&, const __gnu_cxx::new_allocator<_Tp>&)
+     operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/ext/new_allocator.h:155:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::new_allocator<_Tp>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/locale_conv.h:41:0,
+                 from /usr/include/c++/7/locale:43,
+                 from /usr/include/c++/7/iomanip:43,
+                 from AccessControlMatrix.cpp:4:
+/usr/include/c++/7/bits/unique_ptr.h:694:5: note: candidate: template<class _Tp, class _Dp> bool std::operator==(std::nullptr_t, const std::unique_ptr<_Tp, _Dp>&)
+     operator==(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+     ^~~~~~~~
+/usr/include/c++/7/bits/unique_ptr.h:694:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ is not derived from ‘const std::unique_ptr<_Tp, _Dp>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/locale_conv.h:41:0,
+                 from /usr/include/c++/7/locale:43,
+                 from /usr/include/c++/7/iomanip:43,
+                 from AccessControlMatrix.cpp:4:
+/usr/include/c++/7/bits/unique_ptr.h:689:5: note: candidate: template<class _Tp, class _Dp> bool std::operator==(const std::unique_ptr<_Tp, _Dp>&, std::nullptr_t)
+     operator==(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+     ^~~~~~~~
+/usr/include/c++/7/bits/unique_ptr.h:689:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::unique_ptr<_Tp, _Dp>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/locale_conv.h:41:0,
+                 from /usr/include/c++/7/locale:43,
+                 from /usr/include/c++/7/iomanip:43,
+                 from AccessControlMatrix.cpp:4:
+/usr/include/c++/7/bits/unique_ptr.h:683:5: note: candidate: template<class _Tp, class _Dp, class _Up, class _Ep> bool std::operator==(const std::unique_ptr<_Tp, _Dp>&, const std::unique_ptr<_Up, _Ep>&)
+     operator==(const unique_ptr<_Tp, _Dp>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/unique_ptr.h:683:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::unique_ptr<_Tp, _Dp>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/7/bits/basic_ios.h:37,
+                 from /usr/include/c++/7/ios:44,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from AccessControlMatrix.cpp:2:
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note: candidate: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^~~~~~~~
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/ios_base.h:46:0,
+                 from /usr/include/c++/7/ios:42,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from AccessControlMatrix.cpp:2:
+/usr/include/c++/7/system_error:311:3: note: candidate: bool std::operator==(const std::error_condition&, const std::error_condition&)
+   operator==(const error_condition& __lhs,
+   ^~~~~~~~
+/usr/include/c++/7/system_error:311:3: note:   no known conversion for argument 1 from ‘std::__cxx11::basic_string<char>’ to ‘const std::error_condition&’
+/usr/include/c++/7/system_error:304:3: note: candidate: bool std::operator==(const std::error_condition&, const std::error_code&)
+   operator==(const error_condition& __lhs, const error_code& __rhs) noexcept
+   ^~~~~~~~
+/usr/include/c++/7/system_error:304:3: note:   no known conversion for argument 1 from ‘std::__cxx11::basic_string<char>’ to ‘const std::error_condition&’
+/usr/include/c++/7/system_error:297:3: note: candidate: bool std::operator==(const std::error_code&, const std::error_condition&)
+   operator==(const error_code& __lhs, const error_condition& __rhs) noexcept
+   ^~~~~~~~
+/usr/include/c++/7/system_error:297:3: note:   no known conversion for argument 1 from ‘std::__cxx11::basic_string<char>’ to ‘const std::error_code&’
+/usr/include/c++/7/system_error:292:3: note: candidate: bool std::operator==(const std::error_code&, const std::error_code&)
+   operator==(const error_code& __lhs, const error_code& __rhs) noexcept
+   ^~~~~~~~
+/usr/include/c++/7/system_error:292:3: note:   no known conversion for argument 1 from ‘std::__cxx11::basic_string<char>’ to ‘const std::error_code&’
+In file included from /usr/include/c++/7/vector:64:0,
+                 from AccessControlMatrix.h:5,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_vector.h:1596:5: note: candidate: template<class _Tp, class _Alloc> bool std::operator==(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)
+     operator==(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_vector.h:1596:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/map:62:0,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_multimap.h:1061:5: note: candidate: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator==(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)
+     operator==(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_multimap.h:1061:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/map:61:0,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_map.h:1395:5: note: candidate: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator==(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)
+     operator==(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_map.h:1395:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_map.h:63:0,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/tuple:1397:5: note: candidate: template<class ... _TElements, class ... _UElements> constexpr bool std::operator==(const std::tuple<_Tps ...>&, const std::tuple<_Args2 ...>&)
+     operator==(const tuple<_TElements...>& __t,
+     ^~~~~~~~
+/usr/include/c++/7/tuple:1397:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::tuple<_Tps ...>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/tuple:39:0,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/array:252:5: note: candidate: template<class _Tp, long unsigned int _Nm> bool std::operator==(const std::array<_Tp, _Nm>&, const std::array<_Tp, _Nm>&)
+     operator==(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+     ^~~~~~~~
+/usr/include/c++/7/array:252:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::array<_Tp, _Nm>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from /usr/include/c++/7/array:39,
+                 from /usr/include/c++/7/tuple:39,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6031:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6031:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   mismatched types ‘const _CharT*’ and ‘std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from /usr/include/c++/7/array:39,
+                 from /usr/include/c++/7/tuple:39,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6019:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6019:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   mismatched types ‘const _CharT*’ and ‘std::__cxx11::basic_string<char>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from /usr/include/c++/7/array:39,
+                 from /usr/include/c++/7/tuple:39,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6005:5: note: candidate: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6005:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ is not derived from ‘const std::__cxx11::basic_string<_CharT>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from /usr/include/c++/7/array:39,
+                 from /usr/include/c++/7/tuple:39,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:5997:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:5997:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘const std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/char_traits.h:40:0,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from /usr/include/c++/7/array:39,
+                 from /usr/include/c++/7/tuple:39,
+                 from /usr/include/c++/7/bits/stl_map.h:63,
+                 from /usr/include/c++/7/map:61,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/postypes.h:216:5: note: candidate: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^~~~~~~~
+/usr/include/c++/7/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::fpos<_StateT>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/map:60:0,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_tree.h:1533:5: note: candidate: template<class _Key, class _Val, class _KeyOfValue, class _Compare, class _Alloc> bool std::operator==(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&, const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&)
+     operator==(const _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_tree.h:1533:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/map:60:0,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_tree.h:406:5: note: candidate: template<class _Val> bool std::operator==(const std::_Rb_tree_iterator<_Tp>&, const std::_Rb_tree_const_iterator<_Val>&)
+     operator==(const _Rb_tree_iterator<_Val>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_tree.h:406:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::_Rb_tree_iterator<_Tp>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_tree.h:64:0,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/allocator.h:152:5: note: candidate: template<class _Tp> bool std::operator==(const std::allocator<_Tp1>&, const std::allocator<_Tp1>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:152:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_Tp1>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_tree.h:64:0,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/allocator.h:146:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::allocator<_Tp1>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:146:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_Tp1>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:1124:5: note: candidate: template<class _Iterator> bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&)
+     operator==(const move_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:1124:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:1118:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)
+     operator==(const move_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:1118:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:337:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:337:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:299:5: note: candidate: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:299:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/stl_pair.h:443:5: note: candidate: template<class _T1, class _T2> constexpr bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_pair.h:443:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/7/bits/stl_algobase.h:71:0,
+                 from /usr/include/c++/7/bits/stl_tree.h:63,
+                 from /usr/include/c++/7/map:60,
+                 from AccessControlMatrix.h:4,
+                 from AccessControlMatrix.cpp:1:
+/usr/include/c++/7/bits/predefined_ops.h:241:17: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::pair<_T1, _T2>’
+  { return *__it == _M_value; }
+           ~~~~~~^~~~~~~~~~~
+Makefile:9: recipe for target 'AccessControlMatrix.o' failed
+make: *** [AccessControlMatrix.o] Error 1
