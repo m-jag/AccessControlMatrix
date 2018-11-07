@@ -28,28 +28,28 @@ class AccessControlMatrix
 	public:
 		AccessControlMatrix(vector<string> rights);
 		void printMatrix();
-
-	protected:
-		bool checkRight(string subject, string object, string right); // Checks rights for the accessing subject
+		
+		bool checkRight(string subject, string object, string right); // Che  cks rights for the accessing subject
 		
 		bool subjectExists(string subj_name);
 		bool objectExists(string obj_name);
 		bool rightExists(string right_name);
 
-		void transferRights(string subject1, string subject2); //R1
-		void grantRight(string granting_subject, string subject, string object, string right); //R2
-		void deleteRight(string object, string subject, string right); //R3
+		bool transferRights(string subject1, string subject2); //R1
+		bool grantRight(string granting_subject, string subject, string object, string right); //R2
+		bool deleteRight(string object, string subject, string right); //R3
 		vector<string> getRights(string object, string subject); //R4
 
-		void addObject(string creating_subject, string obj_name, bool isSubject = false); //R5
-		void removeObject(string subj_name, string obj_name, bool isSubject = false); //R6
+		bool addObject(string creating_subject, string obj_name, bool isSubject = false); //R5
+		bool removeObject(string subj_name, string obj_name, bool isSubject = false); //R6
 
-		void addSubject(string creating_subject, string sbj_name, string password); //R7
-		void removeSubject(string owning_subject, string sbj_name); //R8
+		bool addSubject(string creating_subject, string sbj_name, string password); //R7
+		bool removeSubject(string owning_subject, string sbj_name); //R8
 
 	private:
-		bool authenticate(string name, string password);
-		string accessingSubject;
+		string authenticatedSubject;
+		int timeAuthenticated;
+		bool authenticate(string name);
 		map<string, string> subjects;
 		map<string, int> rights;
 		vector<string> objects;
