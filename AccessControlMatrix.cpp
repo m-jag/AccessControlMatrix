@@ -39,7 +39,7 @@ AccessControlMatrix::AccessControlMatrix(vector<string> rights)
 	matrix.at(adminName).at(adminName).push_back(right_val);
 }
 
-bool AccessControlMatrix::checkRight(string subject, string object, string right)
+bool AccessControlMatrix::checkRight(Subject subject, string object, string right)
 {
 	// Check values exist
 	bool sExists = subjectExists(subject);
@@ -108,7 +108,7 @@ bool AccessControlMatrix::rightExists(string right_name)
 
 // R1
 // Transfers rights from S1 -> S2
-bool AccessControlMatrix::transferRights(string subject1, string subject2)
+bool AccessControlMatrix::transferRights(Subject subject1, Subject subject2)
 {
 	bool success = false;
 	if (authenticate(subject1))
@@ -175,12 +175,12 @@ bool AccessControlMatrix::grantRight(string granting_subject, string subject, st
 }
 
 // R3
-bool AccessControlMatrix::deleteRight(string subject, string object, string right)
+bool AccessControlMatrix::deleteRight(Subject deleting_subject, Subject subject, string object, string right)
 {
 	bool success = false;
 	try
 	{
-		if (authenticate(subject))
+		if (authenticate(deletingSubject))
 		{
 			// Check rights
 			if (checkRight(subject, object, "own"))
@@ -434,25 +434,17 @@ bool AccessControlMatrix::removeSubject(string owning_subject, string sbj_name)
 bool AccessControlMatrix::authenticate(string name)
 {
 	bool success = false;
-	if (authenticatedSubject == name)
+	string password;
+	cout << name << endl;
+	cout << "Password: ";
+	cin >> password;
+	if (subjects.at(name) != password)
+	{
+		cout << "Incorrect Password" << endl;
+	}
+	else if (subjects.at(name) == password)
 	{
 		success = true;
-	}
-	else
-	{
-		string password;
-		cout << name << endl;
-		cout << "Password: ";
-		cin >> password;
-		if (subjects.at(name) != password)
-		{
-			cout << "Incorrect Password" << endl;
-		}
-		else if (subjects.at(name) == password)
-		{
-			success = true;
-			authenticatedSubject = name;
-		}
 	}
 	return success;
 }

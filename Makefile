@@ -5,8 +5,11 @@ output: main.o AccessControlMatrix.o
 main.o: main.cpp
 	g++ -c main.cpp
 
-AccessControlMatrix.o: AccessControlMatrix.cpp AccessControlMatrix.h
+AccessControlMatrix.o: subject.o AccessControlMatrix.cpp AccessControlMatrix.h
 	g++ -c AccessControlMatrix.cpp
+
+subject.o: subject.cpp subject.h
+	g++ -c subject.cpp
 
 clean:
 	rm *.o output
